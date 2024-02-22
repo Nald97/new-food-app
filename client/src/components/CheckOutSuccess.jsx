@@ -1,14 +1,19 @@
-import axios from "axios";
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { clearCartItems } from "../context/actions/cartAction";
-import { FaArrowLeft } from "../assets/icons";
 import { NavLink, useSearchParams } from "react-router-dom";
+import emailjs from "emailjs-com";
+import { FaArrowLeft } from "../assets/icons";
 import { Bill } from "../assets";
 import { Header } from "../components";
 import { motion } from "framer-motion";
 import { buttonClcik } from "../animations";
 import { baseURL } from "../api";
+
+export const your_service_ID = "service_narlpyw";
+export const your_template_ID = "template_uwsfeqq";
+export const your_user_ID = "2JHD0eSLPWztJcvel";
 
 const CheckOutSuccess = () => {
   const dispatch = useDispatch();
@@ -19,7 +24,6 @@ const CheckOutSuccess = () => {
   const [total, setTotal] = useState(0);
   const [orderFinalized, setOrderFinalized] = useState(false);
 
-  // Retrieve the selected date from local storage
   const pickupDate = localStorage.getItem("selectedDate")
     ? new Date(localStorage.getItem("selectedDate"))
     : null;
@@ -32,7 +36,6 @@ const CheckOutSuccess = () => {
       });
       setTotal(tot);
 
-      // Immediately invoked async function to finalize order
       (async () => {
         if (tot > 0 && user?.user_id && pickupDate) {
           const orderData = {
@@ -40,17 +43,44 @@ const CheckOutSuccess = () => {
             items: cart,
             total: tot,
             userEmail: user.email,
-            pickupDate: pickupDate.toISOString(), // Use the pickupDate in ISO string format
+            pickupDate: pickupDate.toISOString(),
           };
 
           try {
-            await axios.post(`${baseURL}/api/products/createOrder`, {
-              orderData,
-            });
+            const response = await axios.post(
+              `${baseURL}/api/products/createOrder`,
+              { orderData }
+            );
+            // Assuming the order is successfully created if there's no error up to this point
             dispatch(clearCartItems());
-            setOrderFinalized(true); // Prevent further API calls
+            setOrderFinalized(true);
 
-            // Remove the selected date from local storage after order finalization
+            // Sending email using EmailJS
+            const emailTemplateParams = {
+              to_name: user.email,
+              from_name: "Perkana Semily", // Customize this
+              orderId: session_id,
+              pickupDate: pickupDate.toDateString(),
+              userEmail: user.email,
+              // Add more parameters based on your EmailJS template
+            };
+
+            emailjs
+              .send(
+                your_service_ID,
+                your_template_ID,
+                emailTemplateParams,
+                your_user_ID
+              )
+              .then(
+                (result) => {
+                  console.log("Email sent successfully", result.text);
+                },
+                (error) => {
+                  console.log("Failed to send email", error.text);
+                }
+              );
+
             localStorage.removeItem("selectedDate");
           } catch (err) {
             console.log(err);
@@ -58,7 +88,7 @@ const CheckOutSuccess = () => {
         }
       })();
     }
-  }, [cart, user, dispatch, orderFinalized, pickupDate]);
+  }, [cart, user, dispatch, orderFinalized, pickupDate, session_id, total]);
 
   return (
     <main className="w-50 h-50 flex items-center justify-start flex-col">

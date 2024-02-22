@@ -9,7 +9,7 @@ import { MdOutlineFastfood } from "react-icons/md";
 import NotFoundImage from "../assets/img/NotFound.png";
 
 const FilterSection = () => {
-  const [category, setCategory] = useState("fruits");
+  const [category, setCategory] = useState("Fresh Leaf Scarves");
   const products = useSelector((state) => state.products);
 
   // Filter products based on the selected category
@@ -18,14 +18,19 @@ const FilterSection = () => {
   );
 
   return (
-    <motion.div className="w-full flex items-start justify-start flex-col">
+    <motion.div className="w-full my-5 flex items-start justify-start flex-col">
       <div className="w-full flex items-center justify-center">
         <div className="flex flex-col items-start justify-start gap-1">
           <p className="text-3xl text-headingColor">All Our Products</p>
           <div className="w-full h-1 rounded-md bg-orange-500"></div>
         </div>
       </div>
-      <div className="w-full flex overflow-x-auto pt-6 items-center justify-start md:justify-center gap-6 py-8 px-2">
+      <motion.div
+        initial={{ opacity: 0, x: 200 }}
+        animate={{ opacity: 1, x: 0 }}
+        exit={{ opacity: 0, x: 200 }}
+        className={`w-full py-10 flex items-center justify-start lg:justify-center  h-auto gap-4 md:gap-8  px-2  overflow-x-scroll scrollbar-hidden  scroll-smooth`}
+      >
         {statuses &&
           statuses.map((data) => (
             <FilterCard
@@ -35,9 +40,9 @@ const FilterSection = () => {
               setCategory={setCategory}
             />
           ))}
-      </div>
+      </motion.div>
 
-      <div className="w-full h-auto flex items-center justify-evenly flex-wrap gap-3 mt-12 bg-filterSection">
+      <div className="w-full my-5 h-auto flex items-center justify-evenly flex-wrap gap-3 mt-12 bg-containerbg">
         {filteredProducts.length > 0 ? (
           filteredProducts.map((data) => (
             <SliderCard key={data.id} data={data} /> // Assuming `data.id` is unique

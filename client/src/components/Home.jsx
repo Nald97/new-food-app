@@ -24,11 +24,10 @@ const Home = () => {
 
         <motion.button
           {...buttonClcik}
-          className="bg-gradient-to-bl from-orange-400 to-orange-400 px-4 py-2 rounded-xl text-white text-base font-semibold"
+          className="bg-gradient-to-br from-customOrange-500 to-customOrange-500 w-full md:w-auto px-4 py-2 rounded-lg hover:shadow-lg transition-all ease-in-out duration-100 text-white"
         >
           Order Now
         </motion.button>
-        <br />
       </div>
 
       <div className="py-2 flex-1 flex items-center justify-end relative">
@@ -44,22 +43,24 @@ const Home = () => {
               <motion.div
                 key={i}
                 {...staggerFadeInOut(i)}
-                className=" w-32 h-36 md:h-auto  md:w-190 p-4 bg-lightOverlay backdrop-blur-md rounded-3xl flex flex-col items-center justify-center drop-shadow-lg"
+                className="cursor-pointer min-h-[140px] lg:min-h-[210px] min-w-[150px] lg:min-w-[200px] drop-shadow-lg p-2 bg-cardOverlay backdrop-blur-md rounded-xl flex flex-col items-center justify-center"
               >
-                <img
+                <motion.img
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 1.1 }}
                   src={data.imageURL}
-                  className="w-12 h-12 md:w-32 md:h-32 md:-mt-16 object-contain "
+                  className="w-24 lg:w-40 -mt-10 lg:-mt-20"
                   alt=""
                 />
-                <p className="text-sm lg:text-xl font-semibold text-textColor">
+                <p className="text-base lg:text-lg font-semibold text-textColor">
                   {data.product_name.slice(0, 14)}
                 </p>
 
-                <p className="text-[12px] text-center  md:text-base text-lighttextGray font-semibold  capitalize">
+                <p className="text-[10px] lg:text-lg text-lightGray font-semibold my-2 lg:my-3">
                   {data.product_category}
                 </p>
 
-                <p className="text-sm  font-semibold text-headingColor">
+                <p className="text-sm font-semibold text-headingColor">
                   <span className="text-xs text-red-600">Kč</span>{" "}
                   {data.product_price}
                 </p>

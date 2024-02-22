@@ -1,5 +1,6 @@
+/* eslint-disable no-undef */
 import { motion } from "framer-motion";
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { buttonClcik } from "../animations";
 import { addNewItemToCart, getAllCartItems } from "../api";
@@ -10,6 +11,7 @@ import { setCartItems } from "../context/actions/cartAction";
 const SliderCard = ({ data, index }) => {
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
+  const [col, setCol] = useState(false); // If using state
 
   const sendToCart = () => {
     dispatch(alertSuccess("Added to the cart"));
@@ -24,26 +26,44 @@ const SliderCard = ({ data, index }) => {
   };
 
   return (
-    <div className="bg-lightOverlay hover:drop-shadow-lg backdrop-blur-md rounded-xl flex items-center justify-between relative px-4 py-2 w-full md:w-340 md:min-w-350 gap-3 shadow-md">
-      <img src={data.imageURL} className="w-40 h-40 object-contain" alt="" />
-      <div className="relative pt-12">
-        <p className="text-xl text-headingColor font-semibold">
-          {data.product_name}
-        </p>
-        <p className="text-lg font-semibold text-red-500 flex items-center justify-center gap-1">
-          Kč
-          {parseFloat(data.product_price).toFixed(2)}
-        </p>
-
+    <motion.div
+      whileTap={{ rotate: [0, -1, 1, -1, 0] }}
+      className={`${
+        !col ? "w-[275px] min-w-[275px]" : "w-[320px] min-w-[320px]"
+      } md:w-[300px] md:min-w-[300px] ${
+        col ? "my-4" : "my-2 md:my-5"
+      } h-auto bg-cardOverlay rounded-lg p-2 px-3 backdrop-blur-lg shadow-sm shadow-gray hover:drop-shadow-md cursor-pointer`}
+    >
+      <div className="w-full flex items-center justify-between">
+        <motion.img
+          whileHover={{ scale: 1.2 }}
+          whileTap={{ scale: 1.1 }}
+          className="w-50 h-50 md:w-48 md:h-40 -mt-8 object-contain cursor-pointer"
+          src={data.imageURL}
+        />{" "}
         <motion.div
           {...buttonClcik}
           onClick={sendToCart}
-          className="w-8 h-8 rounded-full bg-red-500 flex items-center justify-center absolute -top-4 right-2 cursor-pointer"
+          whileTap={{ scale: 1.1 }}
+          whileHover={{ scale: 1.2 }}
+          className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-red-600 flex items-center justify-center cursor-pointer"
         >
           <IoBasket className="text-2xl text-primary" />
         </motion.div>
       </div>
-    </div>
+      <div className="w-full flex items-end justify-end flex-col">
+        <p className="text-textColor font-semi-bold text-lg">
+          {data.product_name}
+        </p>
+        <p className="mt-1 text-sm text-gray-500">{data.product_category} </p>
+        <div className="flex items-center justify-between gap-8 ">
+          <p className="text-base text-headingColor font-semibold">
+            <span className="text-sm text-red-600">Kč</span>{" "}
+            {data.product_price}
+          </p>
+        </div>
+      </div>
+    </motion.div>
   );
 };
 

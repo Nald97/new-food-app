@@ -5,10 +5,10 @@ export const isNotActiveStyles =
   " text-lg text-textColor hover:text-red-700 duration-100 px-4 py-2 transition-all ease-in-out";
 
 export const statuses = [
-  { id: 1, title: "Pastry", category: "drinks" },
-  { id: 2, title: "Deserts", category: "deserts" },
-  { id: 3, title: "Bread", category: "fruits" },
-  { id: 4, title: "Others", category: "rice" },
+  { id: 1, title: "Pastry", category: "fruit"},
+  { id: 2, title: "Deserts", category: "Fresh Tray Cakes" },
+  { id: 3, title: "Bread", category: "Fresh Leaf Scarve Rolls" },
+  { id: 4, title: "Others", category: "Fresh Sheet Cakes" },
 
 ];
 

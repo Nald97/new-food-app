@@ -37,15 +37,7 @@ const DBHome = () => {
             <CChart
               type="bar"
               data={{
-                labels: [
-                  "Drinks",
-                  "Deserts",
-                  "Fruits",
-                  "Rice",
-                  "Curry",
-                  "Bread",
-                  "Chinese",
-                ],
+                labels: ["Pastry", "Deserts", "Bread", "Others"],
                 datasets: [
                   {
                     label: "Category wise Count",
