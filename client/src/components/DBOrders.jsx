@@ -1,3 +1,5 @@
+// src/components/DBOrders.jsx
+
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllOrder } from "../api";
@@ -21,7 +23,7 @@ const DBOrders = () => {
       {orders ? (
         <>
           {orders.map((item, i) => (
-            <OrderData key={i} index={i} data={item} admin={true} />
+            <OrderData key={i} index={i} data={item} />
           ))}
         </>
       ) : (

@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllUsers } from "../api";
@@ -55,34 +56,34 @@ const DBUsers = () => {
         ]}
         data={allUsers}
         title="List of Users"
-        // actions={[
-        //   {
-        //     icon: "edit",
-        //     tooltip: "Edit Data",
-        //     onClick: (event, rowData) => {
-        //       alert("You want to edit " + rowData.productId);
-        //     },
-        //   },
-        //   {
-        //     icon: "delete",
-        //     tooltip: "Delete Data",
-        //     onClick: (event, rowData) => {
-        //       if (
-        //         window.confirm("Are you sure, you want to perform this aciton")
-        //       ) {
-        //         deleteAProduct(rowData.productId).then((res) => {
-        //           dispatch(alertSuccess("Product Deleted "));
-        //           setInterval(() => {
-        //             dispatch(alertNULL());
-        //           }, 3000);
-        //           getAllProducts().then((data) => {
-        //             dispatch(setAllProducts(data));
-        //           });
-        //         });
-        //       }
-        //     },
-        //   },
-        // ]}
+        actions={[
+          {
+            icon: "edit",
+            tooltip: "Edit Data",
+            onClick: (event, rowData) => {
+              alert("You want to edit " + rowData.productId);
+            },
+          },
+          {
+            icon: "delete",
+            tooltip: "Delete Data",
+            onClick: (event, rowData) => {
+              if (
+                window.confirm("Are you sure, you want to perform this aciton")
+              ) {
+                deleteAllProduct(rowData.productId).then((res) => {
+                  dispatch(alertSuccess("Product Deleted "));
+                  setInterval(() => {
+                    dispatch(alertNULL());
+                  }, 3000);
+                  getAllProducts().then((data) => {
+                    dispatch(setAllProducts(data));
+                  });
+                });
+              }
+            },
+          },
+        ]}
       />
     </div>
   );

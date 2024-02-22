@@ -1,7 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteAProduct, getAllProducts } from "../api";
-import { HiCurrencyRupee } from "../assets/icons";
 import { DataTable } from "../components";
 import { alertNULL, alertSuccess } from "../context/actions/alertActions";
 import { setAllProducts } from "../context/actions/productActions";
@@ -36,7 +35,7 @@ const DBItems = () => {
             field: "product_price",
             render: (rowData) => (
               <p className="text-xl font-semibold text-textColor flex items-center justify-center ">
-                <HiCurrencyRupee className="text-red-400" />
+                Kč
                 {parseFloat(rowData.product_price).toFixed(2)}
               </p>
             ),

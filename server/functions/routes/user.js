@@ -1,3 +1,5 @@
+// server/functions/routes/user.js
+
 const router = require("express").Router();
 const admin = require("firebase-admin");
 let data = [];
@@ -28,7 +30,7 @@ router.get("/jwtVerfication", async (req, res) => {
   }
 });
 
-const listALlUsers = async (nextpagetoken) => {
+const listAllUsers = async (nextpagetoken) => {
   admin
     .auth()
     .listUsers(1000, nextpagetoken)
@@ -37,16 +39,16 @@ const listALlUsers = async (nextpagetoken) => {
         data.push(rec.toJSON());
       });
       if (listuserresult.pageToken) {
-        listALlUsers(listuserresult.pageToken);
+        listAllUsers(listuserresult.pageToken);
       }
     })
     .catch((er) => console.log(er));
 };
 
-listALlUsers();
+listAllUsers();
 
 router.get("/all", async (req, res) => {
-  listALlUsers();
+  listAllUsers();
   try {
     return res
       .status(200)

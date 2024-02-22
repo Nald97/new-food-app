@@ -4,7 +4,7 @@ import { LoginInput } from "../components";
 import { FaEnvelope, FaLock, FcGoogle } from "../assets/icons";
 import { motion } from "framer-motion";
 import { buttonClcik } from "../animations";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 import {
   getAuth,
@@ -116,14 +116,16 @@ const Login = () => {
       />
 
       {/* content box */}
-      <div className="flex flex-col items-center bg-lightOverlay w-[80%] md:w-508 h-full z-10 backdrop-blur-md p-4 px-4 py-12 gap-6">
+      <div className="flex flex-col items-center bg-white w-[80%] md:w-508 h-full z-10 backdrop-blur-md p-4 px-4 py-12 gap-6">
         {/* Top logo section */}
-        <div className="flex items-center justify-start gap-4 w-full">
-          <img src={Logo} className="w-8" alt="" />
-          <p className="text-headingColor font-semibold text-2xl">City</p>
+        <div className="flex justify-center  gap-4 w-full">
+          <NavLink to={"/"} className="flex items-center justify-center gap-4">
+            <img src={Logo} className="w-20" alt="" />
+          </NavLink>
         </div>
 
         {/* welcome text */}
+
         <p className="text-3xl font-semibold text-headingColor">Welcome Back</p>
         <p className="text-xl text-textColor -mt-6">
           {isSignUp ? "Sign Up" : "Sign In"} with following
@@ -206,13 +208,13 @@ const Login = () => {
 
         <div className="flex items-center justify-between gap-16">
           <div className="w-24 h-[1px] rounded-md bg-white"></div>
-          <p className="text-white">or</p>
+          <p className="text-gray">or</p>
           <div className="w-24 h-[1px] rounded-md bg-white"></div>
         </div>
 
         <motion.div
           {...buttonClcik}
-          className="flex items-center justify-center px-20 py-2 bg-lightOverlay backdrop-blur-md cursor-pointer rounded-3xl gap-4"
+          className="flex items-center justify-center px-20 py-2 bg-lightOverlay backdrop-blur-md cursor-pointer rounded-3xl gap-4 shadow-md"
           onClick={loginWithGoogle}
         >
           <FcGoogle className="text-3xl" />

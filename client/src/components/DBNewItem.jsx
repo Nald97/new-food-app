@@ -136,7 +136,7 @@ const DBNewItem = () => {
         <div className="w-full bg-card backdrop-blur-md h-370 rounded-md border-2 border-dotted border-gray-300 cursor-pointer">
           {isLoading ? (
             <div className="w-full h-full flex flex-col items-center justify-evenly px-24">
-              <Spinner />
+             
               {Math.round(progress > 0) && (
                 <div className=" w-full flex flex-col items-center justify-center gap-2">
                   <div className="flex justify-between w-full">

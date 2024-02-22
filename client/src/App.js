@@ -10,6 +10,7 @@ import { app } from "./config/firebase.config";
 import { Dashboard, Login, Main } from "./containers";
 import { setCartItems } from "./context/actions/cartAction";
 import { setUserDetails } from "./context/actions/userActions";
+import { Navigate } from "react-router-dom";
 
 const App = () => {
   const firebaseAuth = getAuth(app);
@@ -52,7 +53,16 @@ const App = () => {
       <Routes>
         <Route path="/*" element={<Main />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/dashboard/*" element={<Dashboard />} />
+        <Route
+          path="/dashboard/*"
+          element={
+            firebaseAuth.currentUser ? (
+              <Dashboard />
+            ) : (
+              <Navigate replace to="/login" />
+            )
+          }
+        />
         <Route path="/checkout-success" element={<CheckOutSuccess />} />
         <Route path="/user-orders" element={<UsersOrder />} />
       </Routes>

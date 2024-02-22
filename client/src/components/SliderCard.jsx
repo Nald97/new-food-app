@@ -24,14 +24,14 @@ const SliderCard = ({ data, index }) => {
   };
 
   return (
-    <div className="bg-lightOverlay hover:drop-shadow-lg backdrop-blur-md rounded-xl flex items-center justify-between relative px-4 py-2 w-full md:w-340 md:min-w-350 gap-3">
+    <div className="bg-lightOverlay hover:drop-shadow-lg backdrop-blur-md rounded-xl flex items-center justify-between relative px-4 py-2 w-full md:w-340 md:min-w-350 gap-3 shadow-md">
       <img src={data.imageURL} className="w-40 h-40 object-contain" alt="" />
       <div className="relative pt-12">
         <p className="text-xl text-headingColor font-semibold">
           {data.product_name}
         </p>
         <p className="text-lg font-semibold text-red-500 flex items-center justify-center gap-1">
-          <HiCurrencyRupee className="text-red-500" />{" "}
+          Kč
           {parseFloat(data.product_price).toFixed(2)}
         </p>
 

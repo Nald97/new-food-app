@@ -1,7 +1,8 @@
+// src/api/index.js
+
 import axios from "axios";
 
-export const baseURL =
-  "http://localhost:5001/fullstack-app-feb-23-reactjs/us-central1/app";
+export const baseURL = "http://localhost:5001/perkana-semily/us-central1/app";
 
 export const validateUserJWTToken = async (token) => {
   try {
@@ -46,6 +47,7 @@ export const deleteAProduct = async (productId) => {
   }
 };
 
+// get all the users
 export const getAllUsers = async () => {
   try {
     const res = await axios.get(`${baseURL}/api/users/all`);
@@ -69,6 +71,7 @@ export const addNewItemToCart = async (user_id, data) => {
   }
 };
 
+// get all the cart items
 export const getAllCartItems = async (user_id) => {
   try {
     const res = await axios.get(
@@ -95,6 +98,7 @@ export const increaseItemQuantity = async (user_id, productId, type) => {
   }
 };
 
+// get all the orders
 export const getAllOrder = async () => {
   try {
     const res = await axios.get(`${baseURL}/api/products/orders`);
@@ -114,6 +118,67 @@ export const updateOrderSts = async (order_id, sts) => {
     );
     return res.data.data;
   } catch (error) {
+    return null;
+  }
+};
+
+// create order
+export const createOrder = async (orderData) => {
+  try {
+    const response = await axios.post(
+      `${baseURL}/api/products/createOrder`,
+      orderData
+    );
+    // Check if the response indicates success
+    if (response.data && response.data.success) {
+      // Order created and cart cleared successfully
+      return {
+        success: true,
+        data: response.data.data,
+        message: response.data.message,
+      };
+    } else {
+      // Handle case where the API response format is unexpected or indicates failure
+      console.error(
+        "Order creation succeeded but the response format was unexpected:",
+        response
+      );
+      return {
+        success: false,
+        message: "Unexpected response format from createOrder API.",
+      };
+    }
+  } catch (error) {
+    console.error("Error creating order:", error);
+    // Optionally, parse error response for detailed error message
+    const errorMessage =
+      error.response?.data?.message ||
+      "Failed to create order due to an error.";
+    return { success: false, message: errorMessage };
+  }
+};
+
+// delete cart items after order has been created
+export const deleteCartItems = async (user_id) => {
+  try {
+    const res = await axios.delete(
+      `${baseURL}/api/products/deleteCartItems/${user_id}`
+    );
+    return res.data.data;
+  } catch (error) {
+    return null;
+  }
+};
+
+// create checkout session
+export const createCheckoutSession = async (data) => {
+  try {
+    const res = await axios.post(
+      `${baseURL}/api/products/create-checkout-session`,
+      { ...data }
+    );
+    return res.data.data;
+  } catch (err) {
     return null;
   }
 };

@@ -6,41 +6,34 @@ import { randomData } from "../utils/styles";
 
 const Home = () => {
   return (
-    <motion.div className="w-full grid grid-cols-1 md:grid-cols-2 gap-4 ">
+    <motion.div className="grid grid-cols-1 md:grid-cols-2 gap-2 w-full">
       <div className="flex flex-col items-start justify-start gap-6">
-        <div className="px-4 py-1 flex items-center justify-center gap-2 bg-orange-100 rounded-full">
-          <p className="text-lg font-semibold text-orange-500">Free Delivery</p>
-          <div className="w-10 h-10 flex items-center justify-center rounded-full bg-primary shadow-md">
-            <img
-              src={Delivery}
-              alt=""
-              className="w-full h-full object-contain"
-            />
-          </div>
-        </div>
-
-        <p className="text-[40px] text-headingColor md:text-[72px] font-sans font-extrabold tracking-wider">
-          The Fastest Delivery in{" "}
-          <span className="text-orange-600">Your City</span>
+        <p className="text-[2rem] lg:text-[4rem] font-bold tracking-wide text-headingColor">
+          <span
+            style={{ color: "#D28C03", fontSize: "1.5rem" }}
+            className="lg:text-[2.3rem]"
+          >
+            Bakery Semily s.r.o
+          </span>
+        </p>
+        <p className="text-lg text-textColor text-center md:text-left md:w-[80%]">
+          In our bakery, we approach pastries with expertise and love. We love
+          baked goods and our work, and we pay attention to improving production
+          procedures and developing new products.
         </p>
 
-        <p className="text-textColor text-lg">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod ipsam
-          doloribus et similique distinctio, rem deleniti ipsa, nesciunt vitae
-          labore voluptates sunt ducimus mollitia id libero! Nostrum expedita
-          libero recusandae?
-        </p>
         <motion.button
           {...buttonClcik}
-          className="bg-gradient-to-bl from-orange-400 to-orange-600 px-4 py-2 rounded-xl text-black text-base font-semibold"
+          className="bg-gradient-to-bl from-orange-400 to-orange-400 px-4 py-2 rounded-xl text-white text-base font-semibold"
         >
           Order Now
         </motion.button>
+        <br />
       </div>
 
       <div className="py-2 flex-1 flex items-center justify-end relative">
         <img
-          className="absolute top-0 right-0 md:-right-12  w-full h-420 md:w-auto md:h-650"
+          className="absolute lg:h-[550px] h-[420px] w-full lg:w-auto"
           src={HeroBg}
           alt=""
         />
@@ -67,7 +60,7 @@ const Home = () => {
                 </p>
 
                 <p className="text-sm  font-semibold text-headingColor">
-                  <span className="text-xs text-red-600">$</span>{" "}
+                  <span className="text-xs text-red-600">Kč</span>{" "}
                   {data.product_price}
                 </p>
               </motion.div>

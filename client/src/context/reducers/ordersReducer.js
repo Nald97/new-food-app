@@ -1,3 +1,5 @@
+// src/context/reducers/ordersReducer.js
+
 const ordersReducer = (state = null, action) => {
   switch (action.type) {
     case "SET_ORDERS":
