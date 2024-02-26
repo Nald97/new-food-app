@@ -31,6 +31,14 @@ const DBItems = () => {
             field: "product_category",
           },
           {
+            title: "Description",
+            field: "product_description",
+          },
+          {
+            title: "Available For Sale",
+            field: "forSale",
+          },
+          {
             title: "Price",
             field: "product_price",
             render: (rowData) => (

@@ -1,15 +1,15 @@
 export const isActiveStyles =
-  " text-lg text-red-700 font-semibold hover:text-red-700 px-4 py-2 duration-100 transition-all ease-in-out";
+  " text-lg text-customOrange-500 font-semibold hover:text-customOrange-500 px-4 py-2 duration-100 transition-all ease-in-out";
 
 export const isNotActiveStyles =
   " text-lg text-textColor hover:text-red-700 duration-100 px-4 py-2 transition-all ease-in-out";
 
 export const statuses = [
-  { id: 1, title: "Pastry", category: "fruit"},
-  { id: 2, title: "Deserts", category: "Fresh Tray Cakes" },
-  { id: 3, title: "Bread", category: "Fresh Leaf Scarve Rolls" },
-  { id: 4, title: "Others", category: "Fresh Sheet Cakes" },
-
+  { id: 0, title: "For Sale" },
+  { id: 1, title: "Pastry", category: "pastry" },
+  { id: 2, title: "Deserts", category: "deserts" },
+  { id: 3, title: "Bread", category: "bread" },
+  { id: 4, title: "Others", category: "others" },
 ];
 
 export const randomData = [

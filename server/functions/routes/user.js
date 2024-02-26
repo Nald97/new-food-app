@@ -1,8 +1,9 @@
+/* eslint-disable new-cap */
 // server/functions/routes/user.js
 
 const router = require("express").Router();
 const admin = require("firebase-admin");
-let data = [];
+const data = [];
 
 router.get("/", (req, res) => {
   return res.send("Inside the user router");
@@ -10,7 +11,7 @@ router.get("/", (req, res) => {
 
 router.get("/jwtVerfication", async (req, res) => {
   if (!req.headers.authorization) {
-    return res.status(500).send({ msg: "Token Not Found" });
+    return res.status(500).send({msg: "Token Not Found"});
   }
 
   const token = req.headers.authorization.split(" ")[1];
@@ -18,10 +19,10 @@ router.get("/jwtVerfication", async (req, res) => {
     const decodedValue = await admin.auth().verifyIdToken(token);
     if (!decodedValue) {
       return res
-        .status(500)
-        .json({ success: false, msg: "Unauthorized access" });
+          .status(500)
+          .json({success: false, msg: "Unauthorized access"});
     }
-    return res.status(200).json({ success: true, data: decodedValue });
+    return res.status(200).json({success: true, data: decodedValue});
   } catch (err) {
     return res.send({
       success: false,
@@ -32,17 +33,17 @@ router.get("/jwtVerfication", async (req, res) => {
 
 const listAllUsers = async (nextpagetoken) => {
   admin
-    .auth()
-    .listUsers(1000, nextpagetoken)
-    .then((listuserresult) => {
-      listuserresult.users.forEach((rec) => {
-        data.push(rec.toJSON());
-      });
-      if (listuserresult.pageToken) {
-        listAllUsers(listuserresult.pageToken);
-      }
-    })
-    .catch((er) => console.log(er));
+      .auth()
+      .listUsers(1000, nextpagetoken)
+      .then((listuserresult) => {
+        listuserresult.users.forEach((rec) => {
+          data.push(rec.toJSON());
+        });
+        if (listuserresult.pageToken) {
+          listAllUsers(listuserresult.pageToken);
+        }
+      })
+      .catch((er) => console.log(er));
 };
 
 listAllUsers();
@@ -51,8 +52,8 @@ router.get("/all", async (req, res) => {
   listAllUsers();
   try {
     return res
-      .status(200)
-      .send({ success: true, data: data, dataCount: data.length });
+        .status(200)
+        .send({success: true, data: data, dataCount: data.length});
   } catch (er) {
     return res.send({
       success: false,

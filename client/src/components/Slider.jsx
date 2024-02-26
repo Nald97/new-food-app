@@ -14,7 +14,7 @@ const Slider = () => {
   const [className, setClass] = useState("className");
 
   useEffect(() => {
-    setFruits(products?.filter((data) => data.product_category === "fruits"));
+    setFruits(products?.filter((data) => data.product_category === "pastry"));
     console.log(fruits);
   }, [products]);
 

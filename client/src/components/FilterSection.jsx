@@ -9,20 +9,20 @@ import { MdOutlineFastfood } from "react-icons/md";
 import NotFoundImage from "../assets/img/NotFound.png";
 
 const FilterSection = () => {
-  const [category, setCategory] = useState("Fresh Leaf Scarves");
+  const [category, setCategory] = useState("pastry");
   const products = useSelector((state) => state.products);
 
   // Filter products based on the selected category
-  const filteredProducts = (products || []).filter(
-    (data) => data.product_category === category
-  );
+  const filteredProducts = category
+    ? (products || []).filter((data) => data.product_category === category)
+    : products.filter((data) => data.forSale === "true");
 
   return (
     <motion.div className="w-full my-5 flex items-start justify-start flex-col">
       <div className="w-full flex items-center justify-center">
         <div className="flex flex-col items-start justify-start gap-1">
           <p className="text-3xl text-headingColor">All Our Products</p>
-          <div className="w-full h-1 rounded-md bg-orange-500"></div>
+          <div className="w-full h-1 rounded-md bg-customOrange-500"></div>
         </div>
       </div>
       <motion.div
@@ -42,7 +42,7 @@ const FilterSection = () => {
           ))}
       </motion.div>
 
-      <div className="w-full my-5 h-auto flex items-center justify-evenly flex-wrap gap-3 mt-12 bg-containerbg">
+      <div className="w-full my-5 h-auto flex items-center justify-evenly flex-wrap gap-8 mt-12 bg-containerbg">
         {filteredProducts.length > 0 ? (
           filteredProducts.map((data) => (
             <SliderCard key={data.id} data={data} /> // Assuming `data.id` is unique

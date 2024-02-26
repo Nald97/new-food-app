@@ -2,7 +2,10 @@
 
 import axios from "axios";
 
-export const baseURL = "http://localhost:5001/perkana-semily/us-central1/app";
+// export const baseURL = "http://localhost:5001/perkana-semily/us-central1/app";
+
+export const baseURL =
+  "https://us-central1-perkana-semily.cloudfunctions.net/app";
 
 export const validateUserJWTToken = async (token) => {
   try {
@@ -123,40 +126,40 @@ export const updateOrderSts = async (order_id, sts) => {
 };
 
 // create order
-export const createOrder = async (orderData) => {
-  try {
-    const response = await axios.post(
-      `${baseURL}/api/products/createOrder`,
-      orderData
-    );
-    // Check if the response indicates success
-    if (response.data && response.data.success) {
-      // Order created and cart cleared successfully
-      return {
-        success: true,
-        data: response.data.data,
-        message: response.data.message,
-      };
-    } else {
-      // Handle case where the API response format is unexpected or indicates failure
-      console.error(
-        "Order creation succeeded but the response format was unexpected:",
-        response
-      );
-      return {
-        success: false,
-        message: "Unexpected response format from createOrder API.",
-      };
-    }
-  } catch (error) {
-    console.error("Error creating order:", error);
-    // Optionally, parse error response for detailed error message
-    const errorMessage =
-      error.response?.data?.message ||
-      "Failed to create order due to an error.";
-    return { success: false, message: errorMessage };
-  }
-};
+// export const createOrder = async (orderData) => {
+//   try {
+//     const response = await axios.post(
+//       `${baseURL}/api/products/createOrder`,
+//       orderData
+//     );
+//     // Check if the response indicates success
+//     if (response.data && response.data.success) {
+//       // Order created and cart cleared successfully
+//       return {
+//         success: true,
+//         data: response.data.data,
+//         message: response.data.message,
+//       };
+//     } else {
+//       // Handle case where the API response format is unexpected or indicates failure
+//       console.error(
+//         "Order creation succeeded but the response format was unexpected:",
+//         response
+//       );
+//       return {
+//         success: false,
+//         message: "Unexpected response format from createOrder API.",
+//       };
+//     }
+//   } catch (error) {
+//     console.error("Error creating order:", error);
+//     // Optionally, parse error response for detailed error message
+//     const errorMessage =
+//       error.response?.data?.message ||
+//       "Failed to create order due to an error.";
+//     return { success: false, message: errorMessage };
+//   }
+// };
 
 // delete cart items after order has been created
 export const deleteCartItems = async (user_id) => {

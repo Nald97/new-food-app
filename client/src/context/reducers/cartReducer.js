@@ -9,8 +9,8 @@ const cartReducer = (state = null, action) => {
       return action.items;
 
     case "CLEAR_CART_ITEMS":
-      return action.items;
-
+      return [];
+      
     default:
       return state;
   }

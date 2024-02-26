@@ -1,19 +1,15 @@
-import React, { useState, useEffect } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { clearCartItems } from "../context/actions/cartAction";
 import { NavLink, useSearchParams } from "react-router-dom";
-import emailjs from "emailjs-com";
-import { FaArrowLeft } from "../assets/icons";
-import { Bill } from "../assets";
 import { Header } from "../components";
 import { motion } from "framer-motion";
 import { buttonClcik } from "../animations";
 import { baseURL } from "../api";
-
-export const your_service_ID = "service_narlpyw";
-export const your_template_ID = "template_uwsfeqq";
-export const your_user_ID = "2JHD0eSLPWztJcvel";
+import { FaArrowLeft } from "../assets/icons";
+import { Bill } from "../assets";
 
 const CheckOutSuccess = () => {
   const dispatch = useDispatch();
@@ -21,91 +17,104 @@ const CheckOutSuccess = () => {
   const session_id = searchParams.get("session_id");
   const cart = useSelector((state) => state.cart);
   const user = useSelector((state) => state.user);
-  const [total, setTotal] = useState(0);
-  const [orderFinalized, setOrderFinalized] = useState(false);
+
+  // Removed the orderCreated state as we're now using a ref to track this.
+  const orderSubmittedRef = useRef(false);
 
   const pickupDate = localStorage.getItem("selectedDate")
     ? new Date(localStorage.getItem("selectedDate"))
     : null;
 
+  let total = 0;
+  if (Array.isArray(cart)) {
+    total = cart.reduce(
+      (acc, item) => acc + item.product_price * item.quantity,
+      0
+    );
+  }
+
   useEffect(() => {
-    let tot = 0;
-    if (cart && cart.length > 0 && !orderFinalized) {
-      cart.forEach((item) => {
-        tot += item.product_price * item.quantity;
-      });
-      setTotal(tot);
+    const createOrder = async () => {
+      if (
+        total > 0 &&
+        user?.user_id &&
+        pickupDate &&
+        !orderSubmittedRef.current
+      ) {
+        const orderData = {
+          userId: user.user_id,
+          items: cart,
+          total: total,
 
-      (async () => {
-        if (tot > 0 && user?.user_id && pickupDate) {
-          const orderData = {
-            userId: user.user_id,
-            items: cart,
-            total: tot,
-            userEmail: user.email,
-            pickupDate: pickupDate.toISOString(),
-          };
+          userEmail: user.email,
+          sessionId: session_id,
+          pickupDate: pickupDate.toISOString(),
+        };
 
-          try {
-            const response = await axios.post(
-              `${baseURL}/api/products/createOrder`,
-              { orderData }
-            );
-            // Assuming the order is successfully created if there's no error up to this point
-            dispatch(clearCartItems());
-            setOrderFinalized(true);
+        try {
+          await axios.post(`${baseURL}/api/products/createOrder`, {
+            orderData,
+          });
+          dispatch(clearCartItems());
+          // Indicate order finalization for UI updates, if necessary.
+          orderSubmittedRef.current = true; // Mark as order submitted to prevent duplicates.
 
-            // Sending email using EmailJS
-            const emailTemplateParams = {
-              to_name: user.email,
-              from_name: "Perkana Semily", // Customize this
-              orderId: session_id,
-              pickupDate: pickupDate.toDateString(),
-              userEmail: user.email,
-              // Add more parameters based on your EmailJS template
-            };
+          // // Sending email using EmailJS
+          // const emailTemplateParams = {
+          //   to_name: user.email,
+          //   from_name: "Perkana Semily", // Customize this
+          //   orderId: session_id,
+          //   pickupDate: pickupDate.toDateString(),
+          //   userEmail: user.email,
+          //   // Add more parameters based on your EmailJS template
+          // };
 
-            emailjs
-              .send(
-                your_service_ID,
-                your_template_ID,
-                emailTemplateParams,
-                your_user_ID
-              )
-              .then(
-                (result) => {
-                  console.log("Email sent successfully", result.text);
-                },
-                (error) => {
-                  console.log("Failed to send email", error.text);
-                }
-              );
+          // emailjs
+          //   .send(
+          //     your_service_ID,
+          //     your_template_ID,
+          //     emailTemplateParams,
+          //     your_user_ID
+          //   )
+          //   .then(
+          //     (result) => {
+          //       console.log("Email sent successfully", result.text);
+          //     },
+          //     (error) => {
+          //       console.log("Failed to send email", error.text);
+          //     }
+          //   );
 
-            localStorage.removeItem("selectedDate");
-          } catch (err) {
-            console.log(err);
-          }
+          localStorage.removeItem("selectedDate");
+        } catch (err) {
+          console.error("Order creation failed:", err);
         }
-      })();
+      }
+    };
+
+    if (!orderSubmittedRef.current) {
+      createOrder();
     }
-  }, [cart, user, dispatch, orderFinalized, pickupDate, session_id, total]);
+  }, [dispatch, total, user, pickupDate, cart]);
 
   return (
     <main className="w-50 h-50 flex items-center justify-start flex-col">
       <Header />
       <div className="w-full flex flex-col items-center justify-center mt-40 px-6 md:px-24 2xl:px-96 gap-12 pb-24">
-        <img src={Bill} className="w-full md:w-656" alt="" />
+        <img
+          src={Bill}
+          className="w-full max-w-xs md:max-w-sm lg:max-w-md xl:max-w-lg"
+          alt=""
+        />
 
-        <h1 className="text-[20px] text-headingColor font-bold">
+        <h1 className="text-lg md:text-xl lg:text-2xl text-headingColor font-bold text-center">
           Amount paid Successfully
         </h1>
-
-        <p>Session ID: {session_id}</p>
 
         <motion.div {...buttonClcik}>
           <NavLink
             to={"/"}
-            className="flex items-center justify-center gap-4 cursor-pointer text-2xl text-textColor font-semibold px-4 py-2 rounded-md border border-gray-300 hover:shadow-md"
+            className="flex items-center justify-center gap-4 cursor-pointer text-lg md:text-xl lg:text-2xl text-textColor font-semibold px-4 py-2 rounded-md border border-gray-300 hover:shadow-md transition duration-300 ease-in-out"
           >
             <FaArrowLeft className="text-xl text-textColor" /> Get back to Home
           </NavLink>

@@ -16,6 +16,5 @@ export const getCartItems = () => {
 export const clearCartItems = () => {
   return {
     type: "CLEAR_CART_ITEMS",
-    items: null,
   };
 };

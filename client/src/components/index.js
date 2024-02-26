@@ -23,3 +23,6 @@ export { default as Cart } from "./Cart";
 export { default as CheckOutSuccess } from "./CheckOutSuccess";
 export { default as OrderData } from "./OrderData";
 export { default as UsersOrder } from "./UsersOrder";
+export { default as AboutUs } from "./AboutUs";
+export { default as Menu } from "./Menu";
+export { default as ContactComponent } from "./ContactComponent";

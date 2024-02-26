@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { LoginBg, Logo } from "../assets";
 import { LoginInput } from "../components";
-import { FaEnvelope, FaLock, FcGoogle } from "../assets/icons";
+import { FaEnvelope, FaLock, FcGoogle, FaArrowLeft } from "../assets/icons";
 import { motion } from "framer-motion";
 import { buttonClcik } from "../animations";
 import { NavLink, useNavigate } from "react-router-dom";
@@ -116,10 +116,11 @@ const Login = () => {
       />
 
       {/* content box */}
-      <div className="flex flex-col items-center bg-white w-[80%] md:w-508 h-full z-10 backdrop-blur-md p-4 px-4 py-12 gap-6">
+      <div className="flex flex-col items-center bg-white w-full sm:w-full md:w-1/2 h-full z-10 backdrop-blur-md p-4 px-4 py-12 gap-6">
         {/* Top logo section */}
         <div className="flex justify-center  gap-4 w-full">
           <NavLink to={"/"} className="flex items-center justify-center gap-4">
+            <FaArrowLeft className="text-xl text-customOrange-500" />
             <img src={Logo} className="w-20" alt="" />
           </NavLink>
         </div>

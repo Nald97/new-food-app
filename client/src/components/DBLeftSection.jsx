@@ -7,7 +7,7 @@ const DBLeftSection = () => {
   return (
     <div className="h-full py-12 flex flex-col bg-lightOverlay backdrop-blur-md shadow-md min-w-210 w-300 gap-3">
       <NavLink to={"/"} className="flex items-center justify-start px-6 gap-4">
-        <img src={Logo} className="w-12" alt="" />
+        <img src={Logo} className="w-24" alt="" />
        
       </NavLink>
 
