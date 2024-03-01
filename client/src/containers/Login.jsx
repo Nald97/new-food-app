@@ -1,3 +1,5 @@
+// src/containers/Login.jsx
+
 import React, { useEffect, useState } from "react";
 import { LoginBg, Logo } from "../assets";
 import { LoginInput } from "../components";
@@ -39,6 +41,10 @@ const Login = () => {
       navigate("/", { replace: true });
     }
   }, [user]);
+
+  const validatePassword = (password) => {
+    return password.length >= 6 ? "" : "Password must be at least 6 characters";
+  };
 
   const loginWithGoogle = async () => {
     await signInWithPopup(firebaseAuth, provider).then((userCred) => {
@@ -150,6 +156,7 @@ const Login = () => {
             inputStateFunc={setPassword}
             type="password"
             isSignUp={isSignUp}
+            validateInput={validatePassword} // Pass the validation function
           />
 
           {isSignUp && (
@@ -160,9 +167,9 @@ const Login = () => {
               inputStateFunc={setConfirm_password}
               type="password"
               isSignUp={isSignUp}
+              validateInput={validatePassword} // Use the same validation for confirm password
             />
           )}
-
           {!isSignUp ? (
             <p>
               Doesn't have an account:{" "}

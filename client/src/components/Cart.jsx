@@ -157,16 +157,15 @@ const Cart = () => {
             </div>
 
             <div className="w-full mt-2 md:mt-0 flex-1 rounded bg-cartItem rounded-t-[2rem] px-8 py-2 flex flex-col  justify-evenly">
-              <p className="text-cartNumBg flex items-center justify-center text-base md:text-xs uppercase">
-                Date You Want to Pick Up
+              <p className="text-white flex items-center justify-center text-base md:text-xs uppercase">
+                Select the Date You Want to Pick Up
               </p>
               <div className=" bg-transparent flex flex-col items-center justify-center">
                 <DatePicker
                   style={{ backgroundColor: "cartNumBg" }}
                   selected={selectedDate}
                   onChange={handleDateChange}
-                  showTimeSelect
-                  dateFormat="Pp"
+                  dateFormat="dd/MM/yyyy"
                   className=" text-sm text-center"
                 />
               </div>
