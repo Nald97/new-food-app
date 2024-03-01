@@ -28,14 +28,6 @@ import { EmptyCart } from "../assets";
 
 import { useNavigate } from "react-router-dom"; // Import useNavigate hook
 
-const saveCartToLocalStorage = (cart) => {
-  localStorage.setItem("cart", JSON.stringify(cart));
-};
-
-const loadCartFromLocalStorage = () => {
-  const storedCart = localStorage.getItem("cart");
-  return storedCart ? JSON.parse(storedCart) : [];
-};
 
 export const AlertWarning = ({ alertMessage }) => {
   return (
@@ -67,17 +59,17 @@ const Cart = () => {
   const navigate = useNavigate(); // Initialize useNavigate
 
   // Load cart from local storage when component mounts
-  useEffect(() => {
-    const savedCart = loadCartFromLocalStorage();
-    if (savedCart?.length > 0) {
-      dispatch(setCartItems(savedCart));
-    }
-  }, [dispatch]);
+  // useEffect(() => {
+  //   const savedCart = loadCartFromLocalStorage();
+  //   if (savedCart?.length > 0) {
+  //     dispatch(setCartItems(savedCart));
+  //   }
+  // }, [dispatch]);
 
-  // Update local storage whenever the cart changes
-  useEffect(() => {
-    saveCartToLocalStorage(cart);
-  }, [cart]);
+  // // Update local storage whenever the cart changes
+  // useEffect(() => {
+  //   saveCartToLocalStorage(cart);
+  // }, [cart]);
 
   useEffect(() => {
     let tot = 0;
